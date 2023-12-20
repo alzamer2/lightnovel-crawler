@@ -210,6 +210,9 @@ class WuxiaComCrawler(BasicBrowserTemplate):
             self.novel_author = author_tag.text.strip()
 
         # Open chapters menu (note: the order of tabs in novel info change whether if you are logged in or not)
+        if self.bearer_token:
+            # Make sure that user info is loaded
+            self.wait('//span[contains(text(), "Log out")]',By.XPATH)
         if len(self.browser.find_all('//*[starts-with(@id, "full-width-tab-")]', By.XPATH)) == 3:
             self.browser.click("#novel-tabs #full-width-tab-0")
             self.browser.wait("#full-width-tabpanel-0 .MuiAccordion-root")
